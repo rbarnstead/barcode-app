@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import axios from 'axios'
+import WebcamComponent from './react-webcam'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,10 @@ function App() {
 
   return (
     <>
+      <div>
+        <h1>React Webcam</h1>
+        <WebcamComponent></WebcamComponent>
+      </div>
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
