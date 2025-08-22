@@ -2,9 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { BrowserPDF417Reader } from "@zxing/browser";
 import { NotFoundException, ChecksumException, FormatException } from "@zxing/library";
 
-export default function Scanner() {
+export default function Scanner({updateResult}) {
     const videoRef = useRef(null);
-    const [result, setResult] = useState("");
     const [scanning, setScanning] = useState(false);
 
     useEffect(() => {
@@ -16,9 +15,8 @@ export default function Scanner() {
         const start = async () => {
             controls = await codeReader.decodeFromVideoDevice(null, videoRef.current, (result, err) => {
                 if (result) {
-                    setResult(result.text);
-                    console.log(result.text, controls);
-                    if (controls) controls.stop;
+                    updateResult(result.text);
+                    if (controls) controls.stop();
                     setScanning(false);
                 } else if (err) {
                     //error checking
@@ -37,7 +35,7 @@ export default function Scanner() {
         start();
 
         return () => {
-            if (controls) controls.stop;
+            if (controls) controls.stop();
         }
 
 
@@ -63,7 +61,7 @@ export default function Scanner() {
                         setScanning(false);
                         if(videoRef.current) videoRef.current.srcObject = null;
                     } else {
-                        setResult("");
+                        updateResult("");
                         setScanning(true);
                     }
                 }}  
