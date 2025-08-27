@@ -16,15 +16,16 @@ export default function Scanner({updateResult}) {
             controls = await codeReader.decodeFromVideoDevice(null, videoRef.current, (result, err) => {
                 if (result) {
                     updateResult(result.text);
+                    console.log(result.text)
                     if (controls) controls.stop();
                     setScanning(false);
                 } else if (err) {
                     //error checking
                     if (err instanceof NotFoundException) {
                     } else if (err instanceof ChecksumException) {
-                        console.log("Checksum failed – keep scanning");
+                        console.log("Checksum failed, keep scanning");
                     } else if (err instanceof FormatException) {
-                        console.log("Format error – keep scanning");
+                        console.log("Format error, keep scanning");
                     } else {
                         console.error("Unexpected error", err);
                     }
